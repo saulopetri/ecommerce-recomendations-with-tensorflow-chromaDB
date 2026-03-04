@@ -1,22 +1,33 @@
 {
-    "name": "ecommerce-recomendations-with-ml",
-    "version": "1.0.0",
-    "description": "An e-commerce recommendation system with TensorFlow.js",
-    "main": "index.js",
-    "type": "module",
-    "scripts": {
-        "start": "browser-sync -w . --server --files 'index.html, data/*.json, js/*.js' --port 3000",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [
-        "ecommerce",
-        "tensorflow",
-        "recommendation",
-        "javascript"
-    ],
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "browser-sync": "^3.0.4"
-    }
+  "name": "ecommerce-recomendations-with-ml",
+  "version": "1.0.0",
+  "description": "An e-commerce recommendation system with TensorFlow.js",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "browser-sync -w . --server --files \"index.html, data/*.json, js/*.js\" --port 3000 --ui-port 3002",
+    "chroma": "cmd /c \"docker stop chroma-hml 2>nul & docker rm chroma-hml 2>nul & docker run -d --name chroma-hml -p 8000:8000 -v chroma-data:/chroma/chroma chromadb/chroma\"",
+    "chroma:stop": "docker stop chroma-hml",
+    "backend": "nodemon --inspect server.js",
+    "test": "node tests.js",
+    "dev": "cmd /c \"npx kill-port 3001 9229 2>nul\" && concurrently -n CHROMA,BACKEND,FRONT -c yellow,cyan,green \"npm run chroma\" \"npm run backend\" \"npm run start\""
+  },
+  "keywords": [
+    "ecommerce",
+    "tensorflow",
+    "recommendation",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^3.0.4",
+    "concurrently": "^9.2.1",
+    "dotenv": "^16.3.1",
+    "kill-port": "^2.0.1"
+  },
+  "dependencies": {
+    "chromadb": "^3.3.1",
+    "express": "^4.18.2"
+  }
 }

@@ -78,3 +78,4 @@ export class ModelView extends View {
         this.#allUsersPurchasesList.innerHTML = html;
     }
 }
+
